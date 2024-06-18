@@ -49,6 +49,17 @@ $hotels = [
 
 ];
 
+$filtered_hotels = $hotels;
+if ($_GET['parking'] == true) {
+    $filtered_hotels = [];
+    foreach ($hotels as $key => $hotel) {
+        if ($hotel['parking']) {
+            $filtered_hotels[] = $hotel;
+        }
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -73,6 +84,23 @@ $hotels = [
         <!-- title -->
         <h1 class="display-1 text-uppercase fw-semibold mb-5">Booklando</h1>
 
+        <!-- form -->
+        <div class="mb-1">
+            <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="GET">
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="px-3 flex-grow-0 rounded-2 mx-3">
+                        <div class="form-check form-switch text-start d-flex align-items-center">
+                            <input class="form-check-input" role="switch" type="checkbox" name="parking" id="parking" <?php echo  $_REQUEST['parking'] ? "checked" : "test" ?>>
+                            <label for="parking" class="form-check-label fs-2 ps-2 text-primary"><i class="fa-solid fa-square-parking"></i></label>
+                        </div>
+
+                    </div>
+                    <div class="">
+                        <button class="btn btn-primary">Cerca</button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
         <!-- table with hotels -->
         <table class="table table-light table-striped-columns table-hover">
@@ -90,7 +118,7 @@ $hotels = [
             <!-- table body -->
             <tbody>
                 <?php # FOR EACH HOTEL
-                foreach ($hotels as $key => $hotel) : ?>
+                foreach ($filtered_hotels as $key => $hotel) : ?>
                     <tr>
                         <td class="fw-semibold"><?php echo $hotel['name'] ?></td>
                         <td class="fst-italic text-truncate"><?php echo $hotel['description'] ?></td>
