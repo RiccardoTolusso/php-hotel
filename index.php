@@ -1,5 +1,14 @@
 <?php
 
+
+$hotels_parameters = [
+    'name' => 'nome',
+    'description' => 'descrizione',
+    'parking' => 'parcheggio',
+    'vote' => 'punteggio',
+    'distance_to_center' => 'dal centro'
+];
+
 $hotels = [
 
     [
@@ -56,18 +65,36 @@ $hotels = [
 </head>
 
 <body>
-    <ul>
-        <?php # FOR EACH HOTEL
-        foreach ($hotels as $key => $hotel) : ?>
-            <li>
-                <?php echo $hotel['name'] ?>
-                <?php echo $hotel['description'] ?>
-                <?php echo $hotel['parking'] ?>
-                <?php echo $hotel['vote'] ?>
-                <?php echo $hotel['distance_to_center'] ?>
-            </li>
-        <?php endforeach ?>
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <?php
+                foreach ($hotels_parameters as $key => $parameter) : ?>
+                    <th class="text-uppercase"><?php echo $parameter ?></th>
+                <?php endforeach ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php # FOR EACH HOTEL
+            foreach ($hotels as $key => $hotel) : ?>
+                <tr>
+                    <td><?php echo $hotel['name'] ?></td>
+                    <td><?php echo $hotel['description'] ?></td>
+                    <td>
+                        <?php
+                        if ($hotel['parking']) : ?>
+                            &checkmark;
+                        <?php else : ?>
+                            &cross;
+                        <?php endif ?>
+
+                    </td>
+                    <td><?php echo $hotel['vote'] ?></td>
+                    <td><?php echo $hotel['distance_to_center'] ?></td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
 
 
     <!-- bootstrap -->
