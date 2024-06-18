@@ -52,12 +52,18 @@ $hotels = [
 </head>
 
 <body>
-    <?php # FOR EACH HOTEL
-    foreach ($hotels as $key => $hotel) : ?>
-        <?php echo $key ?>
-
-
-    <?php endforeach ?>
+    <ul>
+        <?php # FOR EACH HOTEL
+        foreach ($hotels as $key => $hotel) : ?>
+            <li>
+                <?php echo $hotel['name'] ?>
+                <?php echo $hotel['description'] ?>
+                <?php echo $hotel['parking'] ?>
+                <?php echo $hotel['vote'] ?>
+                <?php echo $hotel['distance_to_center'] ?>
+            </li>
+        <?php endforeach ?>
+    </ul>
 
 </body>
 
