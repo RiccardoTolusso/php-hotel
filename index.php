@@ -62,39 +62,59 @@ $hotels = [
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- bootstrap -->
+
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/c3f6cda4b5.js" crossorigin="anonymous"></script>
+    <!-- font awesome -->
 </head>
 
-<body>
-    <table>
-        <thead>
-            <tr>
-                <?php
-                foreach ($hotels_parameters as $key => $parameter) : ?>
-                    <th class="text-uppercase"><?php echo $parameter ?></th>
-                <?php endforeach ?>
-            </tr>
-        </thead>
-        <tbody>
-            <?php # FOR EACH HOTEL
-            foreach ($hotels as $key => $hotel) : ?>
-                <tr>
-                    <td><?php echo $hotel['name'] ?></td>
-                    <td><?php echo $hotel['description'] ?></td>
-                    <td>
-                        <?php
-                        if ($hotel['parking']) : ?>
-                            &checkmark;
-                        <?php else : ?>
-                            &cross;
-                        <?php endif ?>
+<body class="py-5 bg-primary-subtle">
+    <div class="container text-center">
+        <!-- title -->
+        <h1 class="display-1 text-uppercase fw-semibold mb-5">Booklando</h1>
 
-                    </td>
-                    <td><?php echo $hotel['vote'] ?></td>
-                    <td><?php echo $hotel['distance_to_center'] ?></td>
+
+        <!-- table with hotels -->
+        <table class="table table-light table-striped-columns table-hover">
+
+            <!-- table head -->
+            <thead class="table-dark">
+                <tr class="text-uppercase">
+                    <?php
+                    foreach ($hotels_parameters as $key => $parameter) : ?>
+                        <th scope="col"><?php echo $parameter ?></th>
+                    <?php endforeach ?>
                 </tr>
-            <?php endforeach ?>
-        </tbody>
-    </table>
+            </thead>
+
+            <!-- table body -->
+            <tbody>
+                <?php # FOR EACH HOTEL
+                foreach ($hotels as $key => $hotel) : ?>
+                    <tr>
+                        <td class="fw-semibold"><?php echo $hotel['name'] ?></td>
+                        <td class="fst-italic text-truncate"><?php echo $hotel['description'] ?></td>
+                        <td>
+                            <?php
+                            if ($hotel['parking']) : ?>
+                                <i class="fa-regular fa-circle-check text-primary"></i>
+                            <?php else : ?>
+                                <i class="fa-regular fa-circle-xmark text-warning"></i>
+                            <?php endif ?>
+
+                        </td>
+                        <td>
+                            <?php
+                            for ($i = 1; $i <= $hotel['vote']; $i++) : ?>
+                                <i class="fa-solid fa-star text-primary"></i>
+                            <?php endfor ?>
+                        </td>
+                        <td><?php echo $hotel['distance_to_center'] . " Km" ?></td>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+    </div>
 
 
     <!-- bootstrap -->
