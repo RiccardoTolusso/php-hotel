@@ -50,15 +50,22 @@ $hotels = [
 ];
 
 $filtered_hotels = $hotels;
-if ($_GET['parking'] == true) {
+if ($_GET['parking'] || $_GET['stars']) {
     $filtered_hotels = [];
     foreach ($hotels as $key => $hotel) {
-        if ($hotel['parking']) {
-            $filtered_hotels[] = $hotel;
+        // controlla se c'è il filtro parcheggio e nel caso controlla se l'hotel ha il parcheggio
+        if (!$_GET['parking'] || $hotel['parking']) {
+            // controlla se c'è il filtro stelle e nel caso controlla se l'hotel ha abbastanza stelle
+            if (!$_GET['stars'] || $hotel['vote'] >= $_GET['stars']) {
+
+                $filtered_hotels[] = $hotel;
+            }
         }
     }
 }
 
+
+$stars = $_REQUEST['stars'] ?? 1;
 
 ?>
 
@@ -88,16 +95,31 @@ if ($_GET['parking'] == true) {
         <div class="mb-1">
             <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="GET">
                 <div class="d-flex justify-content-center align-items-center">
+
+                    <!-- PARKING SWITCH -->
                     <div class="px-3 flex-grow-0 rounded-2 mx-3">
                         <div class="form-check form-switch text-start d-flex align-items-center">
                             <input class="form-check-input" role="switch" type="checkbox" name="parking" id="parking" <?php echo  $_REQUEST['parking'] ? "checked" : "test" ?>>
                             <label for="parking" class="form-check-label fs-2 ps-2 text-primary"><i class="fa-solid fa-square-parking"></i></label>
                         </div>
+                    </div>
 
+                    <div class="me-4">
+                        <select class="form-select bg-primary text-white form-select-sm" name="stars" value="<?php echo $_REQUEST['stars'] ?>">
+                            <?php #FOR NUMBERS IN RANGE 5
+                            for ($i = 1; $i <= 5; $i++) : ?>
+                                <option value="<?php echo $i ?>" <?php echo $i == $stars ? 'selected' : '' ?>>
+                                    <?php // CREATE STARS
+                                    for ($n = 0; $n < $i; $n++) {
+                                        echo "&star;";
+                                    } ?>
+                                </option>
+                            <?php endfor ?>
+                        </select>
                     </div>
-                    <div class="">
-                        <button class="btn btn-primary">Cerca</button>
-                    </div>
+
+                    <button class="btn btn-primary">Cerca</button>
+
                 </div>
             </form>
         </div>
